@@ -15,13 +15,23 @@ export const Header = () => {
   const toast = useToast();
   const [connectedAddress, setConnectedAddress] = useState("");
 
+  async function setConnectedAccount() {
+    const accounts = await window.ethereum.request<string[]>({
+      method: "eth_accounts",
+    });
+    if (accounts) {
+      const account = accounts[0];
+      if (account) setConnectedAddress(account);
+      else setConnectedAddress("");
+    }
+  }
+
   async function connectAccount() {
     if (isMetaMaskInstalled()) {
-      const accounts = await ethereum.request({
+      await window.ethereum.request({
         method: "eth_requestAccounts",
       });
-      const account = accounts[0];
-      setConnectedAddress(account);
+      await setConnectedAccount();
     } else {
       toast({
         title: "Metamask not found!",
@@ -44,24 +54,13 @@ export const Header = () => {
 
   if (typeof window !== "undefined" && isMetaMaskInstalled()) {
     window.ethereum.on("accountsChanged", async () => {
-      const account = await getConnectedAccount();
-      if (account) {
-        setConnectedAddress(account);
-      } else setConnectedAddress("");
+      await setConnectedAccount();
     });
-  }
-
-  async function getConnectedAccount() {
-    const accounts = await ethereum.request({ method: "eth_accounts" });
-    return accounts[0];
   }
 
   useEffect(() => {
     const updateAccount = async () => {
-      const account = await getConnectedAccount();
-      if (account) {
-        setConnectedAddress(account);
-      } else setConnectedAddress("");
+      await setConnectedAccount();
     };
     updateAccount();
   }, []);

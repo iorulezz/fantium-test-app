@@ -1,6 +1,6 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import { Footer, Header } from "../components";
-import { Home } from "../views";
+import { Admin } from "../views";
 
 export default function IndexPage() {
   return (
@@ -19,7 +19,7 @@ export default function IndexPage() {
           <Header />
         </GridItem>
         <GridItem pl="2" bg="green.300" area={"main"}>
-          <Home />
+          <Admin />
         </GridItem>
         <GridItem pl="2" bg="blue.300" area={"footer"}>
           <Footer />

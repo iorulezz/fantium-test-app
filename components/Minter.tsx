@@ -83,7 +83,7 @@ export const Minter = () => {
                   setShare(event.currentTarget.value)
                 }
               />
-              <InputRightAddon children="%" />
+              <InputRightAddon>%</InputRightAddon>
             </InputGroup>
           </FormControl>
           <FormControl isRequired>

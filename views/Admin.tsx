@@ -1,21 +1,14 @@
 import { Stack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { Minter } from "../components/Minter";
+import { AllowlistManager } from "../components/AllowlistManager";
+import { getConnectedAccount } from "../helpers/accounts";
 
-export const Mint = () => {
+export const Admin = () => {
   const [connectedAddress, setConnectedAddress] = useState("");
-
-  async function getConnectedAccount() {
-    const accounts = await ethereum.request({ method: "eth_accounts" });
-    return accounts[0];
-  }
 
   useEffect(() => {
     const updateAccount = async () => {
-      const account = await getConnectedAccount();
-      if (account) {
-        setConnectedAddress(account);
-      } else setConnectedAddress("");
+      setConnectedAddress(await getConnectedAccount());
     };
     updateAccount();
   }, []);
@@ -25,7 +18,7 @@ export const Mint = () => {
       {connectedAddress === "" ? (
         <Text>No account connected!</Text>
       ) : (
-        <Minter />
+        <AllowlistManager />
       )}
     </Stack>
   );
