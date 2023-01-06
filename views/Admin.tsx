@@ -1,4 +1,4 @@
-import { Stack, Text } from "@chakra-ui/react";
+import { Center, Stack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { AllowlistManager } from "../components/AllowlistManager";
 import { getConnectedAccount } from "../helpers/accounts";
@@ -14,12 +14,12 @@ export const Admin = () => {
   }, []);
 
   return (
-    <Stack alignItems={"start"}>
-      {connectedAddress === "" ? (
-        <Text>No account connected!</Text>
-      ) : (
-        <AllowlistManager />
-      )}
-    </Stack>
+      <Stack align="center" justify="center">
+        {connectedAddress === "" ? (
+          <Text>No account connected!</Text>
+        ) : (
+          <AllowlistManager />
+        )}
+      </Stack>
   );
 };

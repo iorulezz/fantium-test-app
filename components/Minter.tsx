@@ -15,6 +15,7 @@ import {
   NumberInputStepper,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { mint } from "../helpers/contract";
 import { uploadNFTData } from "../helpers/ipfs";
 
 export const Minter = () => {
@@ -28,11 +29,10 @@ export const Minter = () => {
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
     setLoading(true);
 
     try {
-      const response = await uploadNFTData({
+      const ipfsResponse = await uploadNFTData({
         athlete,
         season,
         benefits: {
@@ -41,23 +41,38 @@ export const Minter = () => {
         },
       });
 
-      console.info(response);
+      const uri = `ipfs://${ipfsResponse["IpfsHash"]}`;
+
+      const txHash = await mint(share, uri);
 
       toast({
-        title: response["IpfsHash"],
-        description: "You may now use this vault.",
+        title: "Transaction successfully submitted.",
+        description: (
+          <>
+            Tx hash: {"\n"}
+            <a
+              href={`https://goerli.etherscan.io/tx/${txHash}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {txHash}
+            </a>
+            .
+          </>
+        ),
         status: "success",
-        duration: 5000,
+        duration: 10000,
         position: "top-right",
+        isClosable: true,
       });
     } catch (error) {
-      // @todo DRY, needs to be somewhere higher up.
       toast({
         title: "Request failed",
         description: (error as Error)?.message,
         status: "error",
-        duration: 5000,
+        duration: 10000,
         position: "top-right",
+        isClosable: true,
       });
     } finally {
       setLoading(false);
@@ -133,11 +148,10 @@ export const Minter = () => {
             </FormControl>
           </VStack>
           <Button isLoading={isLoading} type="submit">
-            Create Vault
+            Mint NFT
           </Button>
         </VStack>
       </form>
     </>
   );
 };
-
