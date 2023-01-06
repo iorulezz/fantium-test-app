@@ -4,6 +4,7 @@ import { ExternalProvider } from "@ethersproject/providers";
 import { throwError } from "./contractErrorHandling";
 
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
+const expectedChainId = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID!);
 
 const getProviderFromWindow = () => {
   return new ethers.providers.Web3Provider(
@@ -14,6 +15,14 @@ const getProviderFromWindow = () => {
 const getSigner = () => {
   const provider = getProviderFromWindow();
   return provider.getSigner();
+};
+
+export const checkConnectedChainId = async () => {
+  const provider = getProviderFromWindow();
+  const network = await provider.getNetwork();
+  console.log("exp chain=" , expectedChainId)
+  console.log("conn chain=" , network.chainId)
+  return network.chainId === expectedChainId;
 };
 
 const callMethod = async (method: string, ...args: any[]) => {
