@@ -7,31 +7,22 @@ import {
   ButtonGroup,
   useToast,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { getConnectedAccount, isMetaMaskInstalled } from "../helpers/accounts";
 
 export const Header = () => {
   const router = useRouter();
   const toast = useToast();
   const [connectedAddress, setConnectedAddress] = useState("");
 
-  async function setConnectedAccount() {
-    const accounts = await window.ethereum.request<string[]>({
-      method: "eth_accounts",
-    });
-    if (accounts) {
-      const account = accounts[0];
-      if (account) setConnectedAddress(account);
-      else setConnectedAddress("");
-    }
-  }
-
   async function connectAccount() {
     if (isMetaMaskInstalled()) {
       await window.ethereum.request({
         method: "eth_requestAccounts",
       });
-      await setConnectedAccount();
+      setConnectedAddress(await getConnectedAccount());
     } else {
       toast({
         title: "Metamask not found!",
@@ -44,23 +35,15 @@ export const Header = () => {
     }
   }
 
-  function isMetaMaskInstalled() {
-    return Boolean(
-      typeof window !== "undefined" &&
-        window.ethereum &&
-        window.ethereum.isMetaMask
-    );
-  }
-
   if (typeof window !== "undefined" && isMetaMaskInstalled()) {
     window.ethereum.on("accountsChanged", async () => {
-      await setConnectedAccount();
+      setConnectedAddress(await getConnectedAccount());
     });
   }
 
   useEffect(() => {
     const updateAccount = async () => {
-      await setConnectedAccount();
+      setConnectedAddress(await getConnectedAccount());
     };
     updateAccount();
   }, []);
@@ -68,7 +51,9 @@ export const Header = () => {
   return (
     <Flex minWidth="max-content" alignItems="center" gap="2">
       <Box p="2">
-        <Heading size="md">Fantium Test App</Heading>
+        <Heading size="md">
+          <Link href={"/"}>Fantium Test App</Link>
+        </Heading>
       </Box>
       <Spacer />
       <ButtonGroup gap="2">

@@ -3,7 +3,7 @@ import { ABI } from "./abi";
 import { ExternalProvider } from "@ethersproject/providers";
 import { throwError } from "./contractErrorHandling";
 
-const contractAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
+const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
 
 const getProviderFromWindow = () => {
   return new ethers.providers.Web3Provider(

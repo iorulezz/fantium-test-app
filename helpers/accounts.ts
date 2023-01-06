@@ -1,4 +1,4 @@
-export async function getConnectedAccount(): Promise<string> {
+export async function getConnectedAccount() {
   const accounts = await window.ethereum.request<string[]>({
     method: "eth_accounts",
   });
@@ -7,4 +7,12 @@ export async function getConnectedAccount(): Promise<string> {
     if (account) return account;
   }
   return "";
+}
+
+export function isMetaMaskInstalled() {
+  return Boolean(
+    typeof window !== "undefined" &&
+      window.ethereum &&
+      window.ethereum.isMetaMask
+  );
 }

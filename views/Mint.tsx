@@ -1,10 +1,16 @@
 import { Stack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Minter } from "../components/Minter";
-import { getConnectedAccount } from "../helpers/accounts";
+import { getConnectedAccount, isMetaMaskInstalled } from "../helpers/accounts";
 
 export const Mint = () => {
   const [connectedAddress, setConnectedAddress] = useState("");
+
+  if (typeof window !== "undefined" && isMetaMaskInstalled()) {
+    window.ethereum.on("accountsChanged", async () => {
+      setConnectedAddress(await getConnectedAccount());
+    });
+  }
 
   useEffect(() => {
     const updateAccount = async () => {
@@ -14,9 +20,9 @@ export const Mint = () => {
   }, []);
 
   return (
-    <Stack alignItems={"start"}>
+    <Stack align="center" justify="center">
       {connectedAddress === "" ? (
-        <Text>No account connected!</Text>
+        <Text>Please connect account to proceed.</Text>
       ) : (
         <Minter />
       )}

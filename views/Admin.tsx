@@ -1,10 +1,16 @@
 import { Center, Stack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { AllowlistManager } from "../components/AllowlistManager";
-import { getConnectedAccount } from "../helpers/accounts";
+import { getConnectedAccount, isMetaMaskInstalled } from "../helpers/accounts";
 
 export const Admin = () => {
   const [connectedAddress, setConnectedAddress] = useState("");
+
+  if (typeof window !== "undefined" && isMetaMaskInstalled()) {
+    window.ethereum.on("accountsChanged", async () => {
+      setConnectedAddress(await getConnectedAccount());
+    });
+  }
 
   useEffect(() => {
     const updateAccount = async () => {
@@ -16,7 +22,7 @@ export const Admin = () => {
   return (
       <Stack align="center" justify="center">
         {connectedAddress === "" ? (
-          <Text>No account connected!</Text>
+          <Text>Please connect account to proceed.</Text>
         ) : (
           <AllowlistManager />
         )}
