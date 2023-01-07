@@ -13,11 +13,11 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
-  Container,
   Stack,
+  FormHelperText,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { isAddressAllowed, mint, owner } from "../helpers/contract";
+import React, { useState } from "react";
+import { mint } from "../helpers/contract";
 import { uploadNFTData } from "../helpers/ipfs";
 
 export const Minter = () => {
@@ -44,7 +44,6 @@ export const Minter = () => {
       });
 
       const uri = `ipfs://${ipfsResponse["IpfsHash"]}`;
-
       const txHash = await mint(share, uri);
 
       toast({
@@ -81,6 +80,11 @@ export const Minter = () => {
     }
   };
 
+  const isShareValid = () => {
+    const validShareRegEx = /^\d{0,2}(\.\d{1,4})?$/;
+    return validShareRegEx.test(share);
+  };
+
   return (
     <form onSubmit={onSubmit}>
       <Stack
@@ -95,12 +99,14 @@ export const Minter = () => {
           <InputGroup>
             <Input
               value={share}
+              isInvalid = {!isShareValid()}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setShare(event.currentTarget.value)
               }
             />
             <InputRightAddon>%</InputRightAddon>
           </InputGroup>
+          <FormHelperText>Enter percentage with at most 4 decimal points.</FormHelperText>
         </FormControl>
         <FormControl isRequired>
           <FormLabel>Athlete</FormLabel>

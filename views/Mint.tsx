@@ -1,6 +1,5 @@
 import {
   Container,
-  Divider,
   Stack,
   StackDivider,
   Text,
