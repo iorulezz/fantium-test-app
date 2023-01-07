@@ -55,11 +55,11 @@ export const Mint = () => {
       ) : (
         <VStack divider={<StackDivider borderColor="gray.200" />}>
           {isAllowedToMint ? (
-            <Container maxW="md">
+            <Container maxW="md" textAlign="center">
               The connected address is allowed to mint.
             </Container>
           ) : (
-            <Container maxW="md">
+            <Container maxW="md" textAlign="center">
               The connected address is not in the allowlist! Submitted
               transactions will revert.
             </Container>

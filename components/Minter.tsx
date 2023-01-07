@@ -25,7 +25,7 @@ export const Minter = () => {
   const [isLoading, setLoading] = useState(false);
   const [share, setShare] = useState<string>("");
   const [athlete, setAthlete] = useState<string>("");
-  const [season, setSeason] = useState<number>(1);
+  const [season, setSeason] = useState<number>(2023);
   const [benefit1, setBenefit1] = useState<string>("");
   const [benefit2, setBenefit2] = useState<string>("");
 
@@ -81,7 +81,7 @@ export const Minter = () => {
   };
 
   const isShareValid = () => {
-    const validShareRegEx = /^\d{0,2}(\.\d{1,4})?$/;
+    const validShareRegEx = /^\d{0,2}(\.\d{1,5})?$/;
     return validShareRegEx.test(share);
   };
 
@@ -106,7 +106,7 @@ export const Minter = () => {
             />
             <InputRightAddon>%</InputRightAddon>
           </InputGroup>
-          <FormHelperText>Enter percentage with at most 4 decimal points.</FormHelperText>
+          <FormHelperText>Enter percentage with at most 5 decimal points.</FormHelperText>
         </FormControl>
         <FormControl isRequired>
           <FormLabel>Athlete</FormLabel>
@@ -120,8 +120,8 @@ export const Minter = () => {
         <FormControl isRequired>
           <FormLabel>Season</FormLabel>
           <NumberInput
-            max={20}
-            min={1}
+            max={2100}
+            min={2022}
             value={season}
             onChange={(valueAsString: string, valueAsNumber: number) =>
               setSeason(valueAsNumber)
@@ -154,7 +154,7 @@ export const Minter = () => {
             />
           </FormControl>
         </VStack>
-        <Button isLoading={isLoading} type="submit">
+        <Button isLoading={isLoading} type="submit" color="gray.50" bg="blackAlpha.800" _hover={{ bg: "blackAlpha.600" }}>
           Mint NFT
         </Button>
       </Stack>

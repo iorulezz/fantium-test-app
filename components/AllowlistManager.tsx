@@ -9,6 +9,7 @@ import {
   Container,
   Divider,
   Stack,
+  Center,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { allow, owner, revoke } from "../helpers/contract";
@@ -63,6 +64,7 @@ export const AllowlistManager = () => {
       });
     } finally {
       setLoading(false);
+      setAddresslist("");
     }
   };
 
@@ -86,7 +88,7 @@ export const AllowlistManager = () => {
   return (
     <form onSubmit={onSubmit}>
       <Stack spacing={4} direction="column" justify="center" align="stretch">
-        <Container>
+        <Container textAlign="center">
           This form is used to manage the allow list. Only the contract owner
           can submit such transactions; otherwise, they will be reverted. The
           current contract owner is {contractOwner}.
@@ -110,7 +112,9 @@ export const AllowlistManager = () => {
           <Button
             isLoading={isLoading}
             onClick={() => setAddresslist("")}
-            colorScheme="red"
+            color="gray.50"
+            bg="red.600"
+            _hover={{ bg: "red.500" }}
           >
             Clear
           </Button>
@@ -118,6 +122,9 @@ export const AllowlistManager = () => {
             isLoading={isLoading}
             disabled={!isAddressesValid()}
             type="submit"
+            color="gray.50"
+            bg="blackAlpha.800"
+            _hover={{ bg: "blackAlpha.600" }}
           >
             Submit
           </Button>

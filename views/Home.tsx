@@ -11,7 +11,7 @@ export const Home = () => {
     <Stack align="center" justify="center" direction={"column"}>
       <VStack divider={<StackDivider borderColor="gray.200" />} spacing="20px">
         <Center>
-          <Container maxW="md">Hello, there sports fan! 👋 🎾</Container>
+          <Container maxW="md">Hi there, sports fans! 👋 🎾</Container>
         </Center>
         <Container maxW="md">Please use the header menu to navigate.</Container>
       </VStack>

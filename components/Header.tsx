@@ -49,36 +49,52 @@ export const Header = () => {
   }, []);
 
   return (
-    <Flex minWidth="max-content" alignItems="center" gap="2">
-      <Box p="2">
+    <Flex minWidth="max-content" alignItems="center" justify="center" gap="2">
+      <Box p="2" alignItems="center">
         <Heading size="md">
           <Link href={"/"}>Fantium Test App</Link>
         </Heading>
       </Box>
       <Spacer />
-      <ButtonGroup gap="2">
-        <Button
-          isDisabled={connectedAddress === ""}
-          onClick={() => router.push("/admin")}
-          colorScheme="teal"
-        >
-          Admin
-        </Button>
-        <Button
-          isDisabled={connectedAddress === ""}
-          onClick={() => router.push("/mint")}
-          colorScheme="teal"
-        >
-          Mint
-        </Button>
-        {connectedAddress === "" ? (
-          <Button onClick={() => connectAccount()} colorScheme="teal">
-            Connect
+      <Box alignItems="center">
+        <ButtonGroup gap="1" alignItems="center" height="50px">
+          <Button
+            isDisabled={connectedAddress === ""}
+            onClick={() => router.push("/admin")}
+            bg="orange.300"
+            color="blackAlpha.800"
+          >
+            Admin
           </Button>
-        ) : (
-          <Button colorScheme="teal">{connectedAddress}</Button>
-        )}
-      </ButtonGroup>
+          <Button
+            isDisabled={connectedAddress === ""}
+            onClick={() => router.push("/mint")}
+            bg="orange.300"
+            color="blackAlpha.800"
+            _hover={{ bg: "orange.200" }}
+          >
+            Mint
+          </Button>
+          {connectedAddress === "" ? (
+            <Button
+              onClick={() => connectAccount()}
+              bg="orange.300"
+              color="blackAlpha.800"
+              _hover={{ bg: "orange.200" }}
+            >
+              Connect
+            </Button>
+          ) : (
+            <Button
+              bg="orange.300"
+              color="blackAlpha.800"
+              _hover={{ bg: "orange.200" }}
+            >
+              {connectedAddress}
+            </Button>
+          )}
+        </ButtonGroup>
+      </Box>
     </Flex>
   );
 };
