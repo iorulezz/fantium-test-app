@@ -13,9 +13,11 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
+  Container,
+  Stack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { mint } from "../helpers/contract";
+import React, { useEffect, useState } from "react";
+import { isAddressAllowed, mint, owner } from "../helpers/contract";
 import { uploadNFTData } from "../helpers/ipfs";
 
 export const Minter = () => {
@@ -80,78 +82,76 @@ export const Minter = () => {
   };
 
   return (
-    <>
-      {" "}
-      This is the minter page!
-      <form onSubmit={onSubmit}>
-        <VStack
-          divider={<StackDivider borderColor="gray.200" />}
-          spacing={4}
-          align="stretch"
-        >
-          <FormControl isRequired>
-            <FormLabel>Share</FormLabel>
-            <InputGroup>
-              <Input
-                value={share}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setShare(event.currentTarget.value)
-                }
-              />
-              <InputRightAddon>%</InputRightAddon>
-            </InputGroup>
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>Athlete</FormLabel>
+    <form onSubmit={onSubmit}>
+      <Stack
+        divider={<StackDivider borderColor="gray.200" />}
+        spacing={4}
+        direction="column"
+        justify="center"
+        align="stretch"
+      >
+        <FormControl isRequired>
+          <FormLabel>Share</FormLabel>
+          <InputGroup>
             <Input
-              value={athlete}
+              value={share}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setAthlete(event.currentTarget.value)
+                setShare(event.currentTarget.value)
+              }
+            />
+            <InputRightAddon>%</InputRightAddon>
+          </InputGroup>
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Athlete</FormLabel>
+          <Input
+            value={athlete}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setAthlete(event.currentTarget.value)
+            }
+          />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Season</FormLabel>
+          <NumberInput
+            max={20}
+            min={1}
+            value={season}
+            onChange={(valueAsString: string, valueAsNumber: number) =>
+              setSeason(valueAsNumber)
+            }
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </FormControl>
+        <VStack spacing={4} align="stretch">
+          <FormControl isRequired>
+            <FormLabel>Benefit 1</FormLabel>
+            <Input
+              value={benefit1}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setBenefit1(event.currentTarget.value)
               }
             />
           </FormControl>
           <FormControl isRequired>
-            <FormLabel>Season</FormLabel>
-            <NumberInput
-              max={20}
-              min={1}
-              value={season}
-              onChange={(valueAsString: string, valueAsNumber: number) =>
-                setSeason(valueAsNumber)
+            <FormLabel>Benefit 2</FormLabel>
+            <Input
+              value={benefit2}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setBenefit2(event.currentTarget.value)
               }
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
+            />
           </FormControl>
-          <VStack spacing={4} align="stretch">
-            <FormControl isRequired>
-              <FormLabel>Benefit 1</FormLabel>
-              <Input
-                value={benefit1}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setBenefit1(event.currentTarget.value)
-                }
-              />
-            </FormControl>
-            <FormControl isRequired>
-              <FormLabel>Benefit 2</FormLabel>
-              <Input
-                value={benefit2}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setBenefit2(event.currentTarget.value)
-                }
-              />
-            </FormControl>
-          </VStack>
-          <Button isLoading={isLoading} type="submit">
-            Mint NFT
-          </Button>
         </VStack>
-      </form>
-    </>
+        <Button isLoading={isLoading} type="submit">
+          Mint NFT
+        </Button>
+      </Stack>
+    </form>
   );
 };

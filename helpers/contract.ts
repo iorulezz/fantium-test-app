@@ -20,25 +20,27 @@ const getSigner = () => {
 export const checkConnectedChainId = async () => {
   const provider = getProviderFromWindow();
   const network = await provider.getNetwork();
-  console.log("exp chain=" , expectedChainId)
-  console.log("conn chain=" , network.chainId)
   return network.chainId === expectedChainId;
 };
 
 const callMethod = async (method: string, ...args: any[]) => {
-  console.log("Calling method: ", method);
+  console.debug("Calling method: ", method, ", with args: ", args);
   try {
     const contract = new ethers.Contract(contractAddress, ABI, getSigner());
     const result = await contract.functions[method](...args);
-    return result;
+    // this will work only for methods that have a single return value
+    const actualResult = result[0]
+    console.debug("Result is: ", actualResult);
+    return actualResult;
   } catch (error) {
     const msg = (error as Error).message;
+    console.error("Error messsage: ", msg);
     throwError(msg);
   }
 };
 
 const send = async (method: string, ...args: any[]) => {
-  console.log("Sending method: ", method);
+  console.log("Calling method: ", method, ", with args: ", args);
   try {
     const contract = new ethers.Contract(contractAddress, ABI, getSigner());
     const tx = await contract.functions[method](...args);
@@ -60,3 +62,5 @@ export const mint = async (share: string, uri: string) =>
 
 // read calls
 export const owner = async () => callMethod("owner");
+export const isAddressAllowed = async (address: string) =>
+  callMethod("isAddressAllowed", address);
