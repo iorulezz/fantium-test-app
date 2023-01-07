@@ -1,12 +1,20 @@
-import { Stack, Text } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import {
+  Stack,
+  Container,
+  VStack,
+  StackDivider,
+  Center,
+} from "@chakra-ui/react";
 
 export const Home = () => {
-  const router = useRouter();
-
   return (
-    <Stack alignItems={"start"}>
-      <Text>Hello, there! 👋</Text>
+    <Stack align="center" justify="center" direction={"column"}>
+      <VStack divider={<StackDivider borderColor="gray.200" />} spacing="20px">
+        <Center>
+          <Container maxW="md">Hello, there sports fan! 👋 🎾</Container>
+        </Center>
+        <Container maxW="md">Please use the header menu to navigate.</Container>
+      </VStack>
     </Stack>
   );
 };
