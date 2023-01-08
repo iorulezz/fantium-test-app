@@ -104,8 +104,8 @@ export const AllowlistManager = () => {
         <Divider />
         <Textarea
           isInvalid={!isAddressesValid()}
-          resize={"both"}
           value={addressList}
+          placeholder={"Please enter a list of valid Ethereum addresses separated by new line."}
           onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
             setAddresslist(event.currentTarget.value)
           }
@@ -130,9 +130,7 @@ export const AllowlistManager = () => {
             isLoading={isLoading}
             disabled={!isAddressesValid()}
             type="submit"
-            color="gray.50"
-            bg="blackAlpha.800"
-            _hover={{ bg: "blackAlpha.600" }}
+            colorScheme={"telegram"}
           >
             Submit
           </Button>

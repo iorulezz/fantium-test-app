@@ -2,17 +2,21 @@ import { Stack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { TokenViewer } from "../components";
 import { getConnectedAccount, isMetaMaskInstalled } from "../helpers/accounts";
-import { checkConnectedChainId } from "../helpers/contract";
+import { balanceOf, checkConnectedChainId } from "../helpers/contract";
 
 export const Tokens = () => {
   const [connectedAddress, setConnectedAddress] = useState("");
   const [isCorrectChainId, setCorrectChainId] = useState(false);
+  const [balance, setBalance] = useState(0);
 
   const updateAccount = async () => {
     setConnectedAddress(await getConnectedAccount());
   };
   const updateChain = async () => {
     setCorrectChainId(await checkConnectedChainId());
+  };
+  const updateBalance = async () => {
+    setBalance(await balanceOf(connectedAddress));
   };
 
   if (typeof window !== "undefined" && isMetaMaskInstalled()) {
@@ -29,6 +33,10 @@ export const Tokens = () => {
     updateAccount();
   }, []);
 
+  useEffect(() => {
+    updateBalance();
+  }, [connectedAddress]);
+
   return (
     <Stack align="center" justify="center">
       {!isCorrectChainId ? (
@@ -36,7 +44,7 @@ export const Tokens = () => {
       ) : connectedAddress === "" ? (
         <Text>Please connect account to proceed.</Text>
       ) : (
-        <TokenViewer />
+        <TokenViewer balance={balance} />
       )}
     </Stack>
   );

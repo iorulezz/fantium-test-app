@@ -164,9 +164,7 @@ export const Minter = () => {
         <Button
           isLoading={isLoading}
           type="submit"
-          color="gray.50"
-          bg="blackAlpha.800"
-          _hover={{ bg: "blackAlpha.600" }}
+          colorScheme={"blue"}
         >
           Mint NFT
         </Button>
