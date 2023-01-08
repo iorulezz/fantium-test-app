@@ -15,10 +15,14 @@ import {
   NumberInputStepper,
   Stack,
   FormHelperText,
+  Container,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { mint } from "../helpers/contract";
 import { uploadNFTData } from "../helpers/ipfs";
+import { DoNotLeave } from "./DoNotLeave";
 
 export const Minter = () => {
   const toast = useToast();
@@ -93,20 +97,23 @@ export const Minter = () => {
         direction="column"
         justify="center"
         align="stretch"
+        width={"sm"}
       >
         <FormControl isRequired>
           <FormLabel>Share</FormLabel>
           <InputGroup>
             <Input
               value={share}
-              isInvalid = {!isShareValid()}
+              isInvalid={!isShareValid()}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setShare(event.currentTarget.value)
               }
             />
             <InputRightAddon>%</InputRightAddon>
           </InputGroup>
-          <FormHelperText>Enter percentage with at most 5 decimal points.</FormHelperText>
+          <FormHelperText>
+            Enter percentage with at most 5 decimal points.
+          </FormHelperText>
         </FormControl>
         <FormControl isRequired>
           <FormLabel>Athlete</FormLabel>
@@ -154,9 +161,16 @@ export const Minter = () => {
             />
           </FormControl>
         </VStack>
-        <Button isLoading={isLoading} type="submit" color="gray.50" bg="blackAlpha.800" _hover={{ bg: "blackAlpha.600" }}>
+        <Button
+          isLoading={isLoading}
+          type="submit"
+          color="gray.50"
+          bg="blackAlpha.800"
+          _hover={{ bg: "blackAlpha.600" }}
+        >
           Mint NFT
         </Button>
+        {isLoading && <DoNotLeave />}
       </Stack>
     </form>
   );

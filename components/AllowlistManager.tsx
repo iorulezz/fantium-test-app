@@ -9,9 +9,12 @@ import {
   Container,
   Divider,
   Stack,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { allow, owner, revoke } from "../helpers/contract";
+import { DoNotLeave } from "./DoNotLeave";
 
 export const AllowlistManager = () => {
   const toast = useToast();
@@ -86,7 +89,13 @@ export const AllowlistManager = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Stack spacing={4} direction="column" justify="center" align="stretch">
+      <Stack
+        spacing={4}
+        direction="column"
+        justify="center"
+        align="stretch"
+        width={"xl"}
+      >
         <Container textAlign="center">
           This form is used to manage the allow list. Only the contract owner
           can submit such transactions; otherwise, they will be reverted. The
@@ -128,6 +137,7 @@ export const AllowlistManager = () => {
             Submit
           </Button>
         </ButtonGroup>
+        {isLoading && <DoNotLeave />}
       </Stack>
     </form>
   );
