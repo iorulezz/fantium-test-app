@@ -4,7 +4,7 @@ export const DoNotLeave = () => {
   return (
     <Alert status="warning">
       <AlertIcon />
-      Please continue on Metamask; do not leave this page while it's loading.
+      Please continue on Metamask; do not leave this page while it is loading.
     </Alert>
   );
 };
