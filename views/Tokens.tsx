@@ -16,7 +16,8 @@ export const Tokens = () => {
     setCorrectChainId(await checkConnectedChainId());
   };
   const updateBalance = async () => {
-    setBalance(await balanceOf(connectedAddress));
+    const balance = (await balanceOf(connectedAddress)).toNumber();
+    setBalance(balance);
   };
 
   if (typeof window !== "undefined" && isMetaMaskInstalled()) {
@@ -34,7 +35,9 @@ export const Tokens = () => {
   }, []);
 
   useEffect(() => {
-    updateBalance();
+    if (connectedAddress !== "") {
+      updateBalance();
+    }
   }, [connectedAddress]);
 
   return (
@@ -44,7 +47,7 @@ export const Tokens = () => {
       ) : connectedAddress === "" ? (
         <Text>Please connect account to proceed.</Text>
       ) : (
-        <TokenViewer balance={balance} />
+        <TokenViewer balance={balance} connectedAddress={connectedAddress} />
       )}
     </Stack>
   );

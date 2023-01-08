@@ -1,4 +1,4 @@
-export async function getConnectedAccount() {
+export const getConnectedAccount = async () => {
   const accounts = await window.ethereum.request<string[]>({
     method: "eth_accounts",
   });
@@ -7,15 +7,15 @@ export async function getConnectedAccount() {
     if (account) return account;
   }
   return "";
-}
+};
 
-export function isMetaMaskInstalled() {
+export const isMetaMaskInstalled = () => {
   return Boolean(
     typeof window !== "undefined" &&
       window.ethereum &&
       window.ethereum.isMetaMask
   );
-}
+};
 
 export const sliceAddress = (address: string) =>
   `${address.slice(0, 4)}...${address.slice(-4)}`;

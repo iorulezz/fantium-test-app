@@ -15,10 +15,8 @@ import {
   NumberInputStepper,
   Stack,
   FormHelperText,
-  Container,
-  Alert,
-  AlertIcon,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { mint } from "../helpers/contract";
 import { uploadNFTData } from "../helpers/ipfs";
@@ -26,6 +24,7 @@ import { DoNotLeave } from "./DoNotLeave";
 
 export const Minter = () => {
   const toast = useToast();
+  const router = useRouter();
   const [isLoading, setLoading] = useState(false);
   const [share, setShare] = useState<string>("");
   const [athlete, setAthlete] = useState<string>("");
@@ -69,6 +68,7 @@ export const Minter = () => {
         duration: 10000,
         position: "top-right",
         isClosable: true,
+        onCloseComplete: () => router.reload(),
       });
     } catch (error) {
       toast({
@@ -161,11 +161,7 @@ export const Minter = () => {
             />
           </FormControl>
         </VStack>
-        <Button
-          isLoading={isLoading}
-          type="submit"
-          colorScheme={"blue"}
-        >
+        <Button isLoading={isLoading} type="submit" colorScheme={"blue"}>
           Mint NFT
         </Button>
         {isLoading && <DoNotLeave />}

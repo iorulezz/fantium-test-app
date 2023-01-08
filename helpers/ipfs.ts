@@ -23,6 +23,27 @@ export const uploadNFTData = async (nftData: NFTData) => {
   };
 
   const response = await axios(config);
+  if (response.status !== 200)
+    throw Error(
+      "Could not resolve IPFS from NFT Storage Gateway. Response: " +
+        response.status
+    );
   return response.data;
-  
+};
+
+export const resolveIpfs = async (ipfs: string) => {
+  const nftStorageUrl = ipfs.replace(
+    /^ipfs:\/\/?/,
+    "https://nftstorage.link/ipfs/"
+  );
+  try {
+    const response = await axios.get(nftStorageUrl);
+    return response.data;
+  } catch (error) {
+    throw Error(
+      `Could not resolve IPFS from NFT Storage Gateway. Error: ${
+        (error as Error).message
+      }`
+    );
+  }
 };

@@ -1,30 +1,32 @@
-import {
-  Button,
-  Radio,
-  RadioGroup,
-  useToast,
-  Textarea,
-  HStack,
-  ButtonGroup,
-  Container,
-  Divider,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { allow, owner, revoke } from "../helpers/contract";
+import { Stack, Flex, Wrap, WrapItem } from "@chakra-ui/react";
+import { NFTCard } from "./NFTCard";
 
 type Props = {
   balance: number;
+  connectedAddress: string;
 };
 
 export const TokenViewer = (props: Props) => {
-  const { balance } = props;
+  const { balance, connectedAddress } = props;
   console.log(balance);
 
+  const cards: JSX.Element[] = [];
+
+  for (let i = 0; i < balance; i++) {
+    cards.push(
+      <NFTCard key={i} index={i} connectedAddress={connectedAddress} />
+    );
+  }
+
   return (
-    <Stack spacing={4} direction="column" justify="center" align="stretch">
-      <Text>Balance is {balance}</Text>
+    <Stack gap={12}>
+      <Flex direction="row" gap={4}>
+        <Wrap>
+          {cards.map((nftCard, index) => (
+            <WrapItem key={index}>{nftCard}</WrapItem>
+          ))}
+        </Wrap>
+      </Flex>
     </Stack>
   );
 };

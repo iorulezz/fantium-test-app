@@ -9,8 +9,6 @@ import {
   Container,
   Divider,
   Stack,
-  Alert,
-  AlertIcon,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { allow, owner, revoke } from "../helpers/contract";

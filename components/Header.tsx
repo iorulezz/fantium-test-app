@@ -21,7 +21,7 @@ export const Header = () => {
   const toast = useToast();
   const [connectedAddress, setConnectedAddress] = useState("");
 
-  async function connectAccount() {
+  const connectAccount = async () => {
     if (isMetaMaskInstalled()) {
       await window.ethereum.request({
         method: "eth_requestAccounts",
@@ -37,7 +37,7 @@ export const Header = () => {
         isClosable: true,
       });
     }
-  }
+  };
 
   if (typeof window !== "undefined" && isMetaMaskInstalled()) {
     window.ethereum.on("accountsChanged", async () => {
@@ -65,45 +65,45 @@ export const Header = () => {
           <Button
             isDisabled={connectedAddress === ""}
             onClick={() => router.push("/mint")}
-            bg="orange.300"
+            bg="#bcff1e"
             color="blackAlpha.800"
-            _hover={{ bg: "orange.200" }}
+            _hover={{ bg: "#e1ff99" }}
           >
             Mint
           </Button>
           <Button
-            isDisabled={true} //{connectedAddress === ""}
+            isDisabled={connectedAddress === ""}
             onClick={() => router.push("/tokens")}
-            bg="orange.300"
+            bg="#bcff1e"
             color="blackAlpha.800"
-            _hover={{ bg: "orange.200" }}
+            _hover={{ bg: "#e1ff99" }}
           >
             My Tokens
           </Button>
           <Button
             isDisabled={connectedAddress === ""}
             onClick={() => router.push("/admin")}
-            bg="orange.300"
+            bg="#bcff1e"
             color="blackAlpha.800"
-            _hover={{ bg: "orange.200" }}
+            _hover={{ bg: "#e1ff99" }}
           >
             Admin
           </Button>
 
           {connectedAddress === "" ? (
             <Button
-              onClick={() => connectAccount()}
-              bg="orange.300"
+              onClick={connectAccount}
+              bg="#bcff1e"
               color="blackAlpha.800"
-              _hover={{ bg: "orange.200" }}
+              _hover={{ bg: "#e1ff99" }}
             >
               Connect
             </Button>
           ) : (
             <Button
-              bg="orange.300"
+              bg="#bcff1e"
               color="blackAlpha.800"
-              _hover={{ bg: "orange.200" }}
+              _hover={{ bg: "#e1ff99" }}
             >
               {sliceAddress(connectedAddress)}
             </Button>

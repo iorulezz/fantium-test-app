@@ -66,7 +66,7 @@ export const isAddressAllowed = async (address: string) =>
   callMethod("isAddressAllowed", address);
 export const balanceOf = async (address: string) =>
   callMethod("balanceOf", address);
-export const tokenOfOwnerByIndex = async (address: string) =>
-  callMethod("tokenOfOwnerByIndex", address);
-export const tokenURI = async (address: string) =>
-  callMethod("tokenURI", address);
+export const tokenOfOwnerByIndex = async (address: string, tokenId: number) =>
+  callMethod("tokenOfOwnerByIndex", address, tokenId);
+export const tokenURI = async (tokenId: number) =>
+  callMethod("tokenURI", tokenId);
