@@ -42,7 +42,7 @@ export const NFTCard = (props: Props) => {
       setTokenId(await tokenOfOwnerByIndex(connectedAddress, index));
     };
     getTokenId();
-  }, [connectedAddress, index]);
+  }, [index]);
 
   const getExplorerUrl = () =>
     `https://goerli.etherscan.io/token/${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}?a=${tokenId}`;

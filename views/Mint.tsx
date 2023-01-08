@@ -1,10 +1,4 @@
-import {
-  Container,
-  Stack,
-  StackDivider,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Container, Stack, StackDivider, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Minter } from "../components/Minter";
 import { getConnectedAccount, isMetaMaskInstalled } from "../helpers/accounts";
@@ -39,7 +33,7 @@ export const Mint = () => {
 
   useEffect(() => {
     const updateAllowed = async () => {
-      connectedAddress !== ""
+      isCorrectChainId && connectedAddress !== ""
         ? setAllowed(await isAddressAllowed(connectedAddress))
         : setAllowed(false);
     };

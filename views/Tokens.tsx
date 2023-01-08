@@ -16,8 +16,9 @@ export const Tokens = () => {
     setCorrectChainId(await checkConnectedChainId());
   };
   const updateBalance = async () => {
-    const balance = (await balanceOf(connectedAddress)).toNumber();
-    setBalance(balance);
+    isCorrectChainId && connectedAddress !== ""
+      ? setBalance((await balanceOf(connectedAddress)).toNumber())
+      : setBalance(0);
   };
 
   if (typeof window !== "undefined" && isMetaMaskInstalled()) {
@@ -46,8 +47,10 @@ export const Tokens = () => {
         <Text>Please connect to Goerli to proceed.</Text>
       ) : connectedAddress === "" ? (
         <Text>Please connect account to proceed.</Text>
-      ) : (
+      ) : balance > 0 ? (
         <TokenViewer balance={balance} connectedAddress={connectedAddress} />
+      ) : (
+        <Text>You have no tokens.</Text>
       )}
     </Stack>
   );
