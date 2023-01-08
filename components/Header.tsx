@@ -10,7 +10,11 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { getConnectedAccount, isMetaMaskInstalled } from "../helpers/accounts";
+import {
+  getConnectedAccount,
+  isMetaMaskInstalled,
+  sliceAddress,
+} from "../helpers/accounts";
 
 export const Header = () => {
   const router = useRouter();
@@ -60,14 +64,6 @@ export const Header = () => {
         <ButtonGroup gap="1" alignItems="center" height="50px">
           <Button
             isDisabled={connectedAddress === ""}
-            onClick={() => router.push("/admin")}
-            bg="orange.300"
-            color="blackAlpha.800"
-          >
-            Admin
-          </Button>
-          <Button
-            isDisabled={connectedAddress === ""}
             onClick={() => router.push("/mint")}
             bg="orange.300"
             color="blackAlpha.800"
@@ -75,6 +71,25 @@ export const Header = () => {
           >
             Mint
           </Button>
+          <Button
+            isDisabled={true} //{connectedAddress === ""}
+            onClick={() => router.push("/tokens")}
+            bg="orange.300"
+            color="blackAlpha.800"
+            _hover={{ bg: "orange.200" }}
+          >
+            My Tokens
+          </Button>
+          <Button
+            isDisabled={connectedAddress === ""}
+            onClick={() => router.push("/admin")}
+            bg="orange.300"
+            color="blackAlpha.800"
+            _hover={{ bg: "orange.200" }}
+          >
+            Admin
+          </Button>
+
           {connectedAddress === "" ? (
             <Button
               onClick={() => connectAccount()}
@@ -90,7 +105,7 @@ export const Header = () => {
               color="blackAlpha.800"
               _hover={{ bg: "orange.200" }}
             >
-              {connectedAddress}
+              {sliceAddress(connectedAddress)}
             </Button>
           )}
         </ButtonGroup>

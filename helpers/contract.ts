@@ -29,7 +29,7 @@ const callMethod = async (method: string, ...args: any[]) => {
     const contract = new ethers.Contract(contractAddress, ABI, getSigner());
     const result = await contract.functions[method](...args);
     // this will work only for methods that have a single return value
-    const actualResult = result[0]
+    const actualResult = result[0];
     console.debug("Result is: ", actualResult);
     return actualResult;
   } catch (error) {
@@ -64,3 +64,9 @@ export const mint = async (share: string, uri: string) =>
 export const owner = async () => callMethod("owner");
 export const isAddressAllowed = async (address: string) =>
   callMethod("isAddressAllowed", address);
+export const balanceOf = async (address: string) =>
+  callMethod("balanceOf", address);
+export const tokenOfOwnerByIndex = async (address: string) =>
+  callMethod("tokenOfOwnerByIndex", address);
+export const tokenURI = async (address: string) =>
+  callMethod("tokenURI", address);

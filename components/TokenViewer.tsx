@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { allow, owner, revoke } from "../helpers/contract";
 
-export const AllowlistManager = () => {
+export const TokenViewer = () => {
   const toast = useToast();
   const [isLoading, setLoading] = useState(false);
   const [contractOwner, setOwner] = useState("");
