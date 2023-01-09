@@ -83,7 +83,7 @@ export const NFTCard = (props: Props) => {
   }, [tokenId]);
 
   return (
-    <Card maxW="md" fontSize={"sm"} my={4} variant="outline">
+    <Card maxW="md" fontSize={"sm"} my={4} variant="outline" borderWidth={"3px"}>
       <CardBody>
         <Stack gap={2} divider={<StackDivider />}>
           <Flex gap={2}>

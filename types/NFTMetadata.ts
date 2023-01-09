@@ -1,5 +1,3 @@
-import { NFTData } from "./NFTData";
-
 export type NFTMetadata = {
     name: string;
     description: string;
