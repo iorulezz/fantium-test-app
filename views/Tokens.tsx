@@ -36,10 +36,8 @@ export const Tokens = () => {
   }, []);
 
   useEffect(() => {
-    if (connectedAddress !== "") {
-      updateBalance();
-    }
-  }, [connectedAddress]);
+    updateBalance();
+  }, [isCorrectChainId, connectedAddress]);
 
   return (
     <Stack align="center" justify="center">

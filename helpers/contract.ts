@@ -24,7 +24,7 @@ export const checkConnectedChainId = async () => {
 };
 
 const callMethod = async (method: string, ...args: any[]) => {
-  console.debug("Calling method: ", method, ", with args: ", args);
+  console.debug("Calling method: ", method, ", with args: ", args, " on contract: ", contractAddress);
   try {
     const contract = new ethers.Contract(contractAddress, ABI, getSigner());
     const result = await contract.functions[method](...args);

@@ -11,6 +11,7 @@ export const parseError = (errMsg: string) => {
 };
 
 export const throwError = (errMsg: string) => {
+  console.log("Whole errMsg = " , errMsg);
   const message = parseError(errMsg);
   throw new Error(message);
 };
