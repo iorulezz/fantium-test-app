@@ -8,8 +8,6 @@ type Props = {
 
 export const TokenViewer = (props: Props) => {
   const { balance, connectedAddress } = props;
-  console.log(balance);
-
   const cards: JSX.Element[] = [];
 
   for (let i = 0; i < balance; i++) {

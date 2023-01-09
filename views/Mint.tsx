@@ -33,12 +33,6 @@ export const Mint = () => {
 
   useEffect(() => {
     const updateAllowed = async () => {
-      console.log(
-        "isCorrectChainId = ",
-        isCorrectChainId,
-        " - connectedAddress = ",
-        connectedAddress
-      );
       isCorrectChainId && connectedAddress !== ""
         ? setAllowed(await isAddressAllowed(connectedAddress))
         : setAllowed(false);

@@ -59,7 +59,6 @@ export const NFTCard = (props: Props) => {
             "base64"
           ).toString();
           var json: NFTMetadata = JSON.parse(jsonString);
-          console.info(json);
           setTokenURI(json);
           const ipfsResponse = await resolveIpfs(json.NFTData);
           const nftData: NFTData = ipfsResponse;
@@ -84,7 +83,7 @@ export const NFTCard = (props: Props) => {
   }, [tokenId]);
 
   return (
-    <Card maxW="md" fontSize={"sm"} my={4}>
+    <Card maxW="md" fontSize={"sm"} my={4} variant="outline">
       <CardBody>
         <Stack gap={2} divider={<StackDivider />}>
           <Flex gap={2}>

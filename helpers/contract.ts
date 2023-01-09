@@ -24,23 +24,21 @@ export const checkConnectedChainId = async () => {
 };
 
 const callMethod = async (method: string, ...args: any[]) => {
-  console.debug("Calling method: ", method, ", with args: ", args, " on contract: ", contractAddress);
+  console.debug("Calling method: ", method, ", with args: ", args);
   try {
     const contract = new ethers.Contract(contractAddress, ABI, getSigner());
     const result = await contract.functions[method](...args);
     // this will work only for methods that have a single return value
     const actualResult = result[0];
-    console.debug("Result is: ", actualResult);
     return actualResult;
   } catch (error) {
     const msg = (error as Error).message;
-    console.error("Error messsage: ", msg);
     throwError(msg);
   }
 };
 
 const send = async (method: string, ...args: any[]) => {
-  console.log("Calling method: ", method, ", with args: ", args);
+  console.debug("Calling method: ", method, ", with args: ", args);
   try {
     const contract = new ethers.Contract(contractAddress, ABI, getSigner());
     const tx = await contract.functions[method](...args);
@@ -48,7 +46,6 @@ const send = async (method: string, ...args: any[]) => {
     return tx.hash;
   } catch (error) {
     const msg = (error as Error).message;
-    console.log("Error messsage: ", msg);
     throwError(msg);
   }
 };
